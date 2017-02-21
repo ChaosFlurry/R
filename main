@@ -1,0 +1,94 @@
+library(ggplot2)
+
+
+getInput = function(message)
+{
+  userInput = readline(prompt=message)
+  return(userInput)
+}
+
+#filename = getInput("Filename: ")
+filename = "GuyLussacPa"
+path = paste("file:///C:/Users/John/Desktop/", filename, ".csv", sep="")
+input = read.csv(file=path)
+
+chartTitle = "Pressure vs Temperature of 80 Heavy Particles"
+#chartTitle = getInput("Chart Title: ")
+#autoPlot = getInput("Specify axis titles? (Y/N) ")
+autoPlot = "n"
+if (tolower(autoPlot) == "yes" || tolower(autoPlot) == "y") {
+  xTitle = getInput("Horizontal Axis Title: ")
+  yTitle = getInput("Vertical Axis Title: ")
+} else {
+  xTitle = colnames(input[1])
+  yTitle = colnames(input[3])
+}
+
+xValues = input[1][,]
+yValues = input[3][,]
+yUncertainty = input[4][,]
+yMax = yValues + yUncertainty
+yMin = yValues - yUncertainty
+errorBarWidth = round(max(xValues)*0.011)
+
+findScaleMax = function(maxVal, divisors) {
+  for (i in maxVal:(maxVal*2)) {
+    if (i %% round(i / divisors) == 0)
+      return(i)
+  }
+}
+
+xScaleMax = 
+yScaleMax = 
+
+g = ggplot(input, aes(x=xValues, y=yValues)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=yMin, ymax=yMax), width=errorBarWidth) +
+  scale_x_continuous(breaks=pretty(xValues, n=4)) +
+  scale_y_continuous(breaks=pretty(yValues, n=4)) +
+  labs(title=chartTitle) +
+  xlab(xTitle) +
+  ylab(yTitle)
+
+g
+
+a = findScaleMax(978, 4)
+
+print(a)
+
+  #scale_x_continuous()
+  #coord_cartesian(xlim=c(0, round(max(xValues))), ylim=c(0, round(max(yValues))))
+  
+
+#qplot(xValues, yValues, data=input, xlab=xTitle, ylab=yTitle)
+
+#g <- ggplot(input, aes(xValues, yValues, ymin=yMin, ymax=yMax))
+#g + geom_
+#  geom_errorbar(aes(x=xValues, ymin=yMin, ymax=yMax), width=10)
+
+
+#  geom_point(data=input, aes(x=xValues, y=yValues)) +
+#  geom_crossbar()
+  #geom_errorbar(data=input, aes(x=xValues, y=yValues,
+  #              ymin=yMin, ymax=yMax), width=errorBarWidth)
+
+
+
+#xlim=round(max(xValues)*1.1), ylim=round(max(yValues)*1.1)
+#graph = ggplot(input, aes(x=xValues, y=yValues)) +
+#  geom_point() +
+#  geom_errorbar(aes(ymin=yMin, ymax=yMax), width=10)
+
+#graph + coord_cartesian(xlim = c(0, max(xValues)*3))
+
+#print(graph)
+#xRange = ggplot_build(graph)$layout$panel_ranges[[1]]$x.range
+#yRange = ggplot_build(graph)$layout$panel_ranges[[1]]$y.range
+
+#coord_cartesian(xlim=max(xValues)*1.1, ylim=max(yValues)*1.1)
+
+#stats = summary(lm(yValues ~ xValues))
+#slope = coef(stats)[2]
+#slopeUncertainty = coef(stats)[4] * 2
+#intercept = coef(stats)[1]
+#interceptUncertainty = coef(stats)[3] * 2
