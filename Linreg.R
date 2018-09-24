@@ -68,9 +68,9 @@ interceptUnits = getInput("Intercept Units: ")
 
 # Slope and Intercept
 equation = paste("Slope:\n", format(slope, nsmall=1, digits=1),
-                 "±", format(slopeUncertainty, nsmall=1, digits=1), " ", slopeUnits, "\n",
+                 "Â±", format(slopeUncertainty, nsmall=1, digits=1), " ", slopeUnits, "\n",
                  "Intecept:\n", format(intercept, nsmall=1, digits=1),
-                 "±", format(interceptUncertainty, nsmall=1, digits=1), " ", interceptUnits, "\n", sep="")
+                 "Â±", format(interceptUncertainty, nsmall=1, digits=1), " ", interceptUnits, "\n", sep="")
 
 # r^2
 #equation = paste(equation, "r^2:\n", format(r2, nsmall=2, digits=2), "\n", sep="")
@@ -79,7 +79,7 @@ equation = paste("Slope:\n", format(slope, nsmall=1, digits=1),
 override = FALSE
 if (override) {
   print("Equation override is enabled")
-  equation = paste("Slope:\n1.46±0.06 \n", "Intercept:\n0.01±0.02\n", sep="")
+  equation = paste("Slope:\n1.46Â±0.06 \n", "Intercept:\n0.01Â±0.02\n", sep="")
 }
 
 
